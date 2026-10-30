@@ -157,7 +157,7 @@ game[pc-2.1r]:
 	anchorfile = HUGO.EXE
 	imports = dos-base
     file[]: crc = 0ae09cbd; size =      1888; name = HELP.DAT
-    file[]: name = HINTS
+    file[]: name = HINTS	; optional = true
     file[]: crc = 5110f12f; size =      1134; name = HUGO.BSF		// 1995-12-02
     file[]: crc = c2e4f80e; size =    110587; name = HUGO.EXE		// 1994-06-05
     file[]: crc = 43bb8532; size =     10393; name = MANUAL.DOC
