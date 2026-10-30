@@ -16,7 +16,6 @@ launch = $(rootpath)\HUGO.EXE $(PARAMETER)
 //
 // filesystem
 //
-mount[]: vpath = $(rootpath); srcpath = $(ifsupgradepath); writable = true;	condition = is_upgrader()
 mount[]: vpath = C:\;		  srcpath = $(ifsdeltapath);   writable = true
 mount[]: vpath = $(rootpath); srcpath = $(ifsinstallpath)
 
@@ -26,22 +25,24 @@ mount[]: vpath = $(rootpath); srcpath = $(ifsinstallpath)
 //
 PARAMETER = $(NULL)
 config[mode]:
-	condition = file_exists("$$(rootpath)\\PLAYBACK.DAT")
+	condition = is_game()
 	title = Mode
 	option[play]:
-		name = Game
+		name = Sound Enabled
 		priority = 1
 		end
 	option[silent]:
-		name = Game, No Sound
+		name = Sound Disabled
 		PARAMETER = -s
 		end
 	option[watch]:
+	condition = file_exists("$$(rootpath)\\PLAYBACK.DAT")
 		name = Automatic Playback
 		PARAMETER = -p
 		end
 	option[watchsilent]:
-		name = Automatic Playback, No Sound
+	condition = file_exists("$$(rootpath)\\PLAYBACK.DAT")
+		name = Automatic Playback, Sound Disabled
 		PARAMETER = -p -s
 		end
 end
