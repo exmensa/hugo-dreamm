@@ -9,7 +9,7 @@ Detects:
     DOS registered v2.0 / 2.1  
     Windows shareware v1.4 / 1.5  
     Windows registered v1.5  
-Options set for automatic playback & disabling sound in registered DOS versions  
+Options set for disabling sound in registered DOS versions & automatic playback in versions that include PLAYBACK.DAT 
 TODO:
     Windows versions currently freeze before displaying anything; errors from windows.unexpected:  
     [    1244] [1MAINp9:1] ====> CreateFile() failed to open file C:\Program Files\hugowin\hwin_1\CONFIG.DAT: OPEN_EXISTING but file doesn't exist
@@ -21,7 +21,7 @@ Hugo II: Whodunit? / Hugo's Mystery Adventure (1991)
 Detects:  
     DOS shareware v1.0 / 1.1 / 1.2 / 2.0 / 2.1  
     DOS registered v2.0 / 2.1  
-Options set for automatic playback & disabling sound in registered DOS versions  
+Options set for disabling sound in registered DOS versions & automatic playback in versions that include PLAYBACK.DAT  
 TODO:
     add detection for Windows versions
 ```
@@ -31,9 +31,8 @@ Hugo III: Jungle of Doom / Hugo's Amazon Adventure (1992)
 Detects:  
     DOS shareware v1.0 / 1.1 / 2.0 / 2.1  
     DOS registered v2.0 / 2.1  
-Options set for automatic playback & disabling sound in registered DOS versions
+Options set for disabling sound & demo mode in DOS versions and automatic playback in registered DOS versions that include PLAYBACK.DAT
 TODO:
-    add mute and demo options for all DOS versions
     add detection for Windows versions
 ```
 ---
