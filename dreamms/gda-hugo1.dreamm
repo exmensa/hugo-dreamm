@@ -1,0 +1,580 @@
+//
+// Hugo's House of Horrors (Gray Design Associates 1989)
+//
+desc[gda-hugo1]:
+name = Hugo's House of Horrors
+icon = gda-hugo1.png
+machine = pc
+osenv = dos
+mips = 0.8
+videohw = ega
+audiohw = sb16
+rootpath = C:\Hugo
+launch = $(rootpath)\HHH.EXE $(PARAMETER)
+
+//
+// filesystem
+//
+mount[]: vpath = $(rootpath); srcpath = $(ifsupgradepath); writable = true; condition = is_upgrader()
+mount[]: vpath = C:\;		  srcpath = $(ifsdeltapath);   writable = true
+mount[]: vpath = $(rootpath); srcpath = $(ifsinstallpath)
+
+
+//
+// Mode selector
+//
+PARAMETER = $(NULL)
+config[mode]:
+	condition = file_exists("$$(rootpath)\\PLAYBACK.DAT")
+	title = Mode
+	option[play]:
+		name = Game
+		priority = 1
+		end
+	option[watch]:
+		name = Automatic Playback
+		PARAMETER = -p
+		end
+end
+
+
+//
+// Installer
+//
+script[init]:
+	condition = is_installer()
+    code = [[[$(CRLF)
+			wait("int21", 8);
+			keyboard_type("y");
+    ]]]
+end
+
+
+// DOS shareware common files
+fragment[dos-base]:
+    file[]: crc = b132b6b9; size =       582; name = ARC.PIX
+    file[]: crc = 018d49eb; size =       581; name = ARM.PIX
+    file[]: crc = 1bb2c5d1; size =     16471; name = BASEMENT.ART
+    file[]: crc = c21180fe; size =      8000; name = BASEMENT.B
+    file[]: crc = 91a0f1c5; size =      8000; name = BASEMENT.O
+    file[]: crc = 6cc41a76; size =      8000; name = BASEMENT.OB
+    file[]: crc = bbf93ede; size =       219; name = BAT.PIX
+    file[]: crc = 66e35e3e; size =      9420; name = BATCAVE.ART
+    file[]: crc = bb02caf8; size =      8000; name = BATCAVE.B
+    file[]: crc = fcf1957c; size =      8000; name = BATCAVE.O
+    file[]: crc = 85adadba; size =      8000; name = BATCAVE.OB
+    file[]: crc = d7b74d7b; size =     10359; name = BATHROOM.ART
+    file[]: crc = b67c0f24; size =      8000; name = BATHROOM.B
+    file[]: crc = a14d17c3; size =      8000; name = BATHROOM.O
+    file[]: crc = 5d6d33d2; size =      8000; name = BATHROOM.OB
+    file[]: crc = df5608f8; size =      5556; name = BED1.ART
+    file[]: crc = 94fd29eb; size =      8000; name = BED1.B
+    file[]: crc = 44acd9d2; size =      8000; name = BED1.O
+    file[]: crc = e5b396d4; size =      8000; name = BED1.OB
+    file[]: crc = 0edec7f8; size =      1396; name = BOAT.PIX
+    file[]: crc = 8780ba35; size =       160; name = BUNG.PIX
+    file[]: crc = fb242447; size =      7610; name = BUTLER.PIX
+    file[]: crc = 4367b072; size =       753; name = CANDLE.PIX
+    file[]: crc = 535c3b72; size =       644; name = CARPET.PIX
+    file[]: crc = f071e969; size =       282; name = CHOP.PIX
+    file[]: crc = ec5b4c19; size =     10701; name = DEADEND.ART
+    file[]: crc = b3950645; size =      8000; name = DEADEND.B
+    file[]: crc = 87202bd0; size =      8000; name = DEADEND.O
+    file[]: crc = 4b534fb4; size =      8000; name = DEADEND.OB
+    file[]: crc = f2b59157; size =     11643; name = DININGRM.ART
+    file[]: crc = 0b5202b5; size =      8000; name = DININGRM.B
+    file[]: crc = 99878076; size =      8000; name = DININGRM.O
+    file[]: crc = 0af483c9; size =      8000; name = DININGRM.OB
+    file[]: crc = 32b44d32; size =      6760; name = DOG.PIX
+    file[]: crc = 44cc491e; size =      2185; name = DOOR.PIX
+    file[]: crc = 7d2ac058; size =       176; name = EYES.PIX
+    file[]: crc = 4d93a825; size =      9608; name = FUZYHERO.PIX
+    file[]: crc = fc985bf8; size =     21392; name = GARDEN.ART
+    file[]: crc = 2a54eccd; size =      8000; name = GARDEN.B
+    file[]: crc = 459ac29b; size =      8000; name = GARDEN.O
+    file[]: crc = 50ef1c1f; size =      8000; name = GARDEN.OB
+    file[]: crc = 877c791b; size =      1791; name = GLASDOOR.PIX
+    file[]: crc = be351a92; size =       555; name = GOLD.PIX
+    file[]: crc = 5ef742f5; size =      3825; name = GUARD.PIX
+    file[]: crc = 975ef454; size =     11849; name = HALL.ART
+    file[]: crc = a2b038c5; size =      8000; name = HALL.B
+    file[]: crc = bc6161a8; size =      8000; name = HALL.O
+    file[]: crc = a04012c8; size =      8000; name = HALL.OB
+    file[]: crc = 49cc750a; size =       543; name = HDLSHERO.PIX
+    file[]: crc = b3e622c9; size =     10309; name = HERO.PIX
+    file[]: crc = cbc078cf; size =       980; name = HERODEAD.PIX
+    file[]: crc = d648bb7a; size =     14811; name = HOUSE.ART
+    file[]: crc = 16a2b375; size =      8000; name = HOUSE.B
+    file[]: crc = 20567ab8; size =      8000; name = HOUSE.O
+    file[]: crc = 88743357; size =      8000; name = HOUSE.OB
+    file[]: crc = 07d1fd85; size =      6168; name = IGOR.PIX
+    file[]: crc = 3fae2b90; size =      6648; name = JAIL.ART
+    file[]: crc = 63c4847c; size =      8000; name = JAIL.B
+    file[]: crc = 4a4be864; size =      8000; name = JAIL.O
+    file[]: crc = 5bb9d28e; size =      8000; name = JAIL.OB
+    file[]: crc = d1a7bd00; size =       260; name = KEY.PIX
+    file[]: crc = 9d64bf28; size =     10151; name = KITCHEN.ART
+    file[]: crc = 620d5652; size =      8000; name = KITCHEN.B
+    file[]: crc = 198f2c2b; size =      8000; name = KITCHEN.O
+    file[]: crc = 0bb28a35; size =      8000; name = KITCHEN.OB
+    file[]: crc = d33f0464; size =     11507; name = LAB.ART
+    file[]: crc = cc665dd2; size =      8000; name = LAB.B
+    file[]: crc = 1c459649; size =      8000; name = LAB.O
+    file[]: crc = e4dffba4; size =      8000; name = LAB.OB
+    file[]: crc = 47b52674; size =     11074; name = LAKEROOM.ART
+    file[]: crc = 2bfe5481; size =      8000; name = LAKEROOM.B
+    file[]: crc = 4c47204c; size =      8000; name = LAKEROOM.O
+    file[]: crc = ade83bfb; size =      8000; name = LAKEROOM.OB
+    file[]: crc = 2ea9f579; size =       302; name = LIPS.PIX
+    file[]: crc = 7bca4b1a; size =       230; name = MASK.PIX
+    file[]: crc = 2acd42ff; size =      5134; name = MDOOR.PIX
+    file[]: crc = c69090b7; size =     10244; name = MONKEY.PIX
+    file[]: crc = 061d294c; size =     11339; name = MUMMY.PIX
+    file[]: crc = 8d535835; size =      9955; name = MUMMYRM.ART
+    file[]: crc = ff0586f8; size =      8000; name = MUMMYRM.B
+    file[]: crc = 0d24c142; size =      8000; name = MUMMYRM.O
+    file[]: crc = 4a613fb2; size =      8000; name = MUMMYRM.OB
+    file[]: crc = c45e29f6; size =       712; name = OLDMAN.PIX
+    file[]: crc = 946efb59; size =      7304; name = PROF.PIX
+    file[]: crc = b841e90a; size =       392; name = PUMPKIN.PIX
+    file[]: crc = 1dabbe78; size =       136; name = REDEYES.PIX
+    file[]: crc = f786bf6b; size =       756; name = ROPE.PIX
+    file[]: crc = 967a455c; size =     10304; name = SCRIPT.FON
+    file[]: crc = 5372f870; size =     10309; name = SPACHERO.PIX
+    file[]: crc = 1c5bd0ff; size =      6534; name = STORERM.ART
+    file[]: crc = 9a4b2fc4; size =      8000; name = STORERM.B
+    file[]: crc = 311e35a8; size =      8000; name = STORERM.O
+    file[]: crc = c6899991; size =      8000; name = STORERM.OB
+    file[]: crc = 76f90ac0; size =      9522; name = THE_END.ART
+    file[]: crc = c06a22be; size =      8000; name = THE_END.B
+    file[]: crc = 17578ce8; size =      8000; name = THE_END.O
+    file[]: crc = f9b3274e; size =      8000; name = THE_END.OB
+    file[]: crc = 3518f506; size =     45936; name = TMSRB.FON
+    file[]: crc = aa7c6478; size =      1140; name = TRAP.PIX
+    file[]: crc = f59d9679; size =      2706; name = WDOORL.PIX
+    file[]: crc = a43aa7ac; size =      2892; name = WDOORR.PIX
+    file[]: crc = 6d936590; size =      8511; name = WHERO.PIX
+end
+
+
+// DOS v1.0 1990-01-01 Baseline version
+demo[pc-1.0s]:
+	name = DOS v1.0 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 77234d7d; size =      1974; name = HELP.DAT
+    file[]: crc = 1f8f2ac0; size =    111882; name = HHH.EXE	// 1989-12-31
+    file[]: crc = 5a0c430b; size =      9047; name = MANUAL.DOC
+    file[]: crc = 46b0be6f; size =      9841; name = README.DOC
+end
+
+
+// DOS 1.1 Shareware 1990-01-03
+// Fixed register incompatibility with VGA cards which caused freeze on first screen
+demo[pc-1.1s]:
+	name = DOS v1.1 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 77234d7d; size =      1974; name = HELP.DAT
+    file[]: crc = 7081242e; size =    111850; name = HHH.EXE	// 1990-01-03
+    file[]: crc = 21257ada; size =      9098; name = MANUAL.DOC
+    file[]: crc = 46b0be6f; size =      9841; name = README.DOC
+end
+
+
+// DOS 1.2S 1990-01-14
+// Fixed ASP compliance "bug"
+demo[pc-1.2s]:
+	name = DOS v1.2 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 77234d7d; size =      1974; name = HELP.DAT
+    file[]: crc = 976c6aa3; size =    111878; name = HHH.EXE	// 1990-01-14
+    file[]: crc = f8eb70a1; size =      9158; name = MANUAL.DOC
+    file[]: crc = 46b0be6f; size =      9841; name = README.DOC
+end
+
+
+// DOS 1.2S installer
+installer[pc-1.2s-inst]:
+	name = DOS v1.2 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.2s
+    file[]: crc = fb3dd15b; size =    227200; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.3S 1990-04-27 - docs unchanged
+// Added corruption self-check
+demo[pc-1.3s]:
+	name = DOS v1.3 Shareware
+	anchorfile = BUNG.PIX
+	imports = pc-1.2s
+    file[]: crc = 8e1ad0e3; size =    112283; name = HHH.EXE	// 1990-04-27
+end
+
+
+// DOS 1.3S installer 1990-04-27
+installer[pc-1.3s-inst]:
+	name = DOS v1.3 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.3s
+    file[]: crc = a25dfbb1; size =    227287; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.3S installer 1990-05-23
+installer[pc-1.3s-inst2]:
+	name = DOS v1.3 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.3s
+    file[]: crc = b78fe41f; size =    227328; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.3S installer 1990-09-07
+installer[pc-1.3s-inst3]:
+	name = DOS v1.3 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.3s
+    file[]: crc = f0a93553; size =    227328; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS v1.4S 1990-09-01
+// Fixed case sensitivity on QUIT or EXIT
+demo[pc-1.4s]:
+	name = DOS v1.4 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 77234d7d; size =      1974; name = help.dat
+    file[]: crc = 2c97f644; size =    112315; name = hhh.exe
+    file[]: crc = 0ac7d1f3; size =      9293; name = manual.doc
+    file[]: crc = da81749b; size =      8479; name = readme.doc
+end
+
+
+// DOS 1.4S installer 1990-09-12
+installer[pc-1.4s-inst]:
+	name = DOS v1.4 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.4s
+    file[]: crc = 710e2f4f; size =    227420; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.5S 1991-02-10
+// Curtailed butler's perambulation
+demo[pc-1.5s]:
+	name = DOS v1.5 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = dc8539b6; size =      1976; name = HELP.DAT
+    file[]: crc = ef7d1118; size =    112337; name = HHH.EXE	// 1991-02-16
+    file[]: crc = 10dd721f; size =     10586; name = MANUAL.DOC
+    file[]: crc = 06465760; size =      9580; name = README.DOC
+end
+
+
+// DOS 1.5S installer
+installer[pc-1.5s-inst]:
+	name = DOS v1.5 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.5s
+    file[]: crc = 9a2a21f0; size =    228271; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.6S 1991-05-14
+// Added 1-800 telephone number
+demo[pc-1.6s]:
+	name = DOS v1.6 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = f64ba593; size =      1972; name = HELP.DAT
+    file[]: crc = c758f53e; size =    112485; name = HHH.EXE	// 1991-05-12
+    file[]: crc = 44744f74; size =     10709; name = MANUAL.DOC	// 1991-05-14
+    file[]: crc = 858fa740; size =     10962; name = README.DOC	// 1991-05-14
+end
+
+
+// DOS 1.6S installer 1990-05-15
+installer[pc-1.6s-inst]:
+	name = DOS v1.6 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.6s
+    file[]: crc = 03a6f92c; size =    228890; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS v1.7s 1991-06-02
+// Added exit screen
+// (archive labeled DOS 1.7S - game data identical to v1.6S but texts are updated)
+demo[pc-1.7s]:
+	name = DOS v1.7 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = f64ba593; size =      1972; name = HELP.DAT
+    file[]: crc = c758f53e; size =    112485; name = HHH.EXE	// 1991-05-12
+    file[]: crc = 7d529594; size =     10688; name = MANUAL.DOC	// 1991-10-20
+    file[]: crc = ec3ef350; size =     11719; name = README.DOC	// 1991-10-22
+end
+
+
+// DOS 1.7S installer
+installer[pc-1.7s-inst]:
+	name = DOS v1.7 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.7s
+    file[]: crc = 357bbf4e; size =    229608; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.8S 1992-02-20
+// Added installation utility, help text to manual
+demo[pc-1.8s]:
+	name = DOS v1.8 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 95f543e3; size =      1741; name = HELP.DAT	// 1992-01-12
+    file[]: crc = c2c2f0b0; size =    112975; name = HHH.EXE	// 1992-02-17
+    file[]: crc = 9f6b6504; size =     15555; name = MANUAL.DOC
+    file[]: crc = 047cd46f; size =     12513; name = README.DOC
+end
+
+
+// DOS 1.9S 1992-05-23
+// Fixed restore bug introduced in 1.8
+// Added helpful wording when looking at pumpkin
+// F2 kills song
+demo[pc-1.9s]:
+	name = DOS v1.9 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 95f543e3; size =      1741; name = HELP.DAT
+    file[]: crc = 2c365b14; size =    112905; name = HHH.EXE	// 1992-05-22
+    file[]: name = MANUAL.DOC	// PSL installer version tags the end
+    file[]: crc = 3538b645; size =     12594; name = README.DOC
+end
+
+
+// DOS 1.9S installer 1992-05-23
+installer[pc-1.9s-inst]:
+	name = DOS v1.9 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.9s
+    file[]: crc = 8697a429; size =    212221; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.9S installer 1992-06-05 - Public Software Library distribution
+installer[pc-1.9s-inst2]:
+	name = DOS v1.9 Shareware Installer
+	anchorfile = hugo1.exe
+	launch = $(rootpath)\hugo1.exe
+	installid = pc-1.9s
+    file[]: crc = 93568cd5; size =    212780; name = hugo1.exe	;	exactonly = true
+end
+
+
+// DOS 2.0R - Chestnut 'CDRP' CD - no record/playback function
+game[pc-2.0r]:
+	name = DOS v2.0 (CDRP)
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = c71e694b; size =      1646; name = HELP.DAT	// 1992-02-18
+    file[]: crc = 253a1f85; size =    114419; name = HHH.EXE	// 1993-06-03
+    file[]: crc = a5f4b430; size =      6024; name = HINTS		// 1993-10-03
+    file[]: crc = d2986bdd; size =       381; name = HUGO.BSF	// 1993-10-03
+    file[]: crc = fe6c8527; size =      8887; name = MANUAL.DOC	// 1993-10-03
+end
+
+
+// DOS 2.0S Micro Star Mind Games CD
+// Fixed bug in start up code
+demo[pc-2.0s-ms]:
+	name = DOS v2.0 Shareware (Micro Star)
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 9ea0feaf; size =      1711; name = HELP.DAT	// 1992-09-08
+    file[]: crc = c5f27913; size =    113259; name = HHH.EXE	// 1992-09-12
+    file[]: crc = 3c904eab; size =       340; name = HUGO.BSF	// 1992-09-17
+    file[]: crc = ca374c55; size =     18766; name = MANUAL.DOC	// 1992-09-17
+end
+
+
+// DOS 2.0S Micro Star Mind Games CD installer
+installer[pc-2.0s-ms-inst]:
+	name = DOS v2.0 Shareware (Micro Star) Installer
+	anchorfile = HOUSEHOR.EXE
+	launch = $(rootpath)\HOUSEHOR.EXE
+	installid = pc-2.0s-ms
+    file[]: crc = c8acd1e3; size =    231422; name = HOUSEHOR.EXE	;	exactonly = true
+end
+
+
+// DOS 2.0S 1992-09-08
+// Fixed bug in start up code
+demo[pc-2.0s]:
+	name = DOS v2.0 Shareware
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 95f543e3; size =      1741; name = HELP.DAT
+    file[]: crc = 253a1f85; size =    114419; name = HHH.EXE
+    file[]: crc = 4a948479; size =       906; name = HUGO.BSF	// 1992-09-28 new encrypted file
+    file[]: crc = 04c95e82; size =     25011; name = MANUAL.DOC
+    file[]: crc = 2ac95eb1; size =      1296; name = VENDOR.DOC
+end
+
+
+// DOS 2.0S 'Software Creations BBS' distribution
+// Fixed bug in start up code
+demo[pc-2.0s-sc]:
+	name = DOS v2.0 Shareware (Software Creations)
+	imports = pc-2.0s
+    file[]: crc = 9c5eadb3; size =    114477; name = HHH.EXE	// 1993-02-07
+    file[]: crc = a13d863f; size =       905; name = HUGO.BSF	// 1993-04-26
+    file[]: crc = e8721e89; size =     25137; name = MANUAL.DOC	// 1993-04-26
+end
+
+
+// DOS 2.1R
+game[pc-2.1r]:
+	name = DOS v2.1
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = e848530e; size =      1442; name = HELP.DAT
+    file[]: crc = 902b5c05; size =    114547; name = HHH.EXE	// 1994-06-05
+    file[]: crc = a5f4b430; size =      6024; name = HINTS
+    file[]: crc = 6ba14207; size =      1134; name = HUGO.BSF
+    file[]: crc = e49a5e7f; size =      9442; name = MANUAL.DOC
+    file[]: crc = dd6949ad; size =      8100; name = PLAYBACK.DAT	;	 optional = true
+end
+
+
+// DOS 2.1S 1994-05-10 Softec distribution
+// Changed documentation
+demo[pc-2.1s-st]:
+	name = DOS v2.1 Shareware (Softec)
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = 93b8d190; size =       410; name = file_id.diz
+    file[]: crc = 46e92880; size =      1963; name = HELP.DAT
+    file[]: crc = 902b5c05; size =    114547; name = HHH.EXE	// 1994-06-05
+    file[]: crc = 4adb14ed; size =       717; name = hugo.bsf	// 1995-02-13
+    file[]: crc = 02515796; size =     22240; name = manual.doc
+end
+
+
+// DOS 2.1S 1994-05-10 'World Wide Web' distribution
+// Changed documentation
+demo[pc-2.1s-www]:
+	name = DOS v2.1 Shareware (World Wide Web)
+	anchorfile = BUNG.PIX
+	imports = dos-base
+    file[]: crc = f20f4c9c; size =       403; name = FILE_ID.DIZ
+    file[]: crc = 46e92880; size =      1963; name = HELP.DAT
+    file[]: crc = 902b5c05; size =    114547; name = HHH.EXE	// 1994-06-05
+    file[]: crc = d7af6c21; size =       717; name = HUGO.BSF	// 1995-07-07
+    file[]: crc = 50c86288; size =     22240; name = MANUAL.DOC	// 1995-07-07
+end
+
+
+// Windows 1.4 shareware (Hugo's Horrific Adventure)
+demo[pc-win-1.4s]:
+	name = Windows v1.4 Shareware
+	anchorfile = HUGOWIN1.EXE
+	rootpath = C:\Program Files\hugowin\hwin_1
+	launch = "$(rootpath)\HUGOWIN1.EXE"
+	osenv = windows 3.11
+	winres = 640x480x8
+	audiohw = gmidi
+    file[]: crc = 5fa34a2c; size =     26000; name = CTL3D.DLL
+    file[]: crc = 87124fde; size =       548; name = FILE0001.DAT
+    file[]: crc = a24b1c37; size =       784; name = FILE0002.DAT
+    file[]: crc = cdc4e715; size =       466; name = FILE0003.DAT
+    file[]: crc = 7430fddc; size =       397; name = FILE_ID.DIZ
+    file[]: crc = 38821d8d; size =      8653; name = HHH00.SAV
+    file[]: crc = 6d6b1f53; size =      1244; name = HUGO.BSF
+    file[]: crc = d16e3a9a; size =    250832; name = HUGOWIN1.EXE		// 1995-12-07
+    file[]: crc = 132e1aee; size =     45878; name = HUGOWIN1.HLP
+    file[]: crc = 680b0dc7; size =      5604; name = HWINUNR
+    file[]: crc = c191719a; size =      6520; name = LICENSE.TXT
+    file[]: crc = a3c7cc7e; size =    126488; name = OBJECTS.DAT
+    file[]: crc = d14c0e55; size =      4317; name = README.DOC
+    file[]: crc = 5a48653b; size =    113688; name = REGISTER.HLP
+    file[]: crc = 4caf6c4e; size =    600948; name = SCENERY.DAT
+    file[]: crc = d0cfd159; size =    263625; name = SOUNDS.DAT
+    file[]: crc = 944b8c92; size =      6415; name = SPINDLL.DLL
+    file[]: crc = 91c86aa0; size =     16323; name = STRINGS.DAT
+    file[]: crc = 3144d2be; size =     13694; name = UIF.DAT
+    file[]: crc = 6b015c51; size =     25680; name = VBANIM.VBX
+    file[]: crc = ef64888b; size =     59344; name = VBEDIT.VBX
+    file[]: crc = a2f4f4e8; size =     33856; name = VBGAUGE.VBX
+    file[]: crc = 33b2c659; size =     43200; name = VBLIST.VBX
+    file[]: crc = e2ef867c; size =     31472; name = VBPICBTN.VBX
+    file[]: crc = 844eb6b5; size =     25280; name = VBSPIN.VBX
+    file[]: crc = cf6c2be2; size =     26608; name = VBTEXT.VBX
+    file[]: crc = 1c001d68; size =     13824; name = W32INST.DLL
+    file[]: crc = 8ca53320; size =     78976; name = WISE0001.DLL
+end
+
+
+// Windows 1.5 shareware (Hugo's Horrific Adventure)
+demo[pc-win-1.5s]:
+	name = Windows v1.5 Shareware
+	imports = pc-win-1.4s
+    file[]: crc = 5cccb6ec; size =       548; name = FILE0001.DAT
+    file[]: crc = f7f4096c; size =       399; name = FILE_ID.DIZ
+    file[]: crc = c450ed62; size =      8653; name = HHH00.SAV
+    file[]: crc = 3aec7e81; size =      1128; name = HUGO.BSF
+    file[]: crc = afdfa76b; size =    250832; name = HUGOWIN1.EXE		// 1997-10-08
+    file[]: crc = 200de999; size =      5870; name = HWINUNR
+    file[]: crc = f5598d22; size =      1084; name = LICENSE.TXT
+    file[]: crc = 23a05da6; size =      4458; name = README.DOC
+    file[]: crc = d19a1c5b; size =    111680; name = REGISTER.HLP
+    file[]: crc = 35ee2e91; size =      1474; name = REGISTER.TXT
+    file[]: crc = 4d3e7a68; size =     13824; name = W32INST.DLL
+    file[]: crc = 67cfade3; size =     86400; name = WISE0001.DLL
+end
+
+
+// Windows 1.5 (Hugo's Horrific Adventure)
+game[pc-win-1.5r]:
+	name = Windows v1.5
+	anchorfile = HUGOWIN1.EXE
+	rootpath = C:\Program Files\hugowin\hwin_1
+	launch = "$(rootpath)\HUGOWIN1.EXE"
+	osenv = windows 3.11
+	winres = 640x480x8
+	audiohw = gmidi
+    file[]: crc = c450ed62; size =      8653; name = HHH00.SAV
+    file[]: crc = 661c50ea; size =       876; name = HUGO.BSF
+    file[]: crc = afdfa76b; size =    250832; name = HUGOWIN1.EXE
+    file[]: crc = 132e1aee; size =     45878; name = HUGOWIN1.HLP
+    file[]: crc = 66312562; size =      9726; name = HW_HINT1.TXT
+    file[]: crc = a3c7cc7e; size =    126488; name = OBJECTS.DAT
+    file[]: crc = 4caf6c4e; size =    600948; name = SCENERY.DAT
+    file[]: crc = d0cfd159; size =    263625; name = SOUNDS.DAT
+    file[]: crc = 944b8c92; size =      6415; name = SPINDLL.DLL
+    file[]: crc = 91c86aa0; size =     16323; name = STRINGS.DAT
+    file[]: crc = 3144d2be; size =     13694; name = UIF.DAT
+    file[]: crc = 6b015c51; size =     25680; name = VBANIM.VBX
+    file[]: crc = ef64888b; size =     59344; name = VBEDIT.VBX
+    file[]: crc = a2f4f4e8; size =     33856; name = VBGAUGE.VBX
+    file[]: crc = 33b2c659; size =     43200; name = VBLIST.VBX
+    file[]: crc = e2ef867c; size =     31472; name = VBPICBTN.VBX
+    file[]: crc = 844eb6b5; size =     25280; name = VBSPIN.VBX
+    file[]: crc = cf6c2be2; size =     26608; name = VBTEXT.VBX
+end
+
+end

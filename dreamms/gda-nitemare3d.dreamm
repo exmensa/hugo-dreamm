@@ -1,0 +1,380 @@
+//
+// Nitemare-3D (Gray Design Associates 1994)
+//
+desc[gda-nitemare3d]:
+name = Nitemare-3D
+icon = gda-nitemare3d.png
+machine = pc
+osenv = dos
+audiohw = sb16
+rootpath = C:\Nitemare
+launch = "$(rootpath)\$(EXEC).exe" $(PARAMETER)
+PARAMETER = $(NULL)
+
+//
+// filesystem
+//
+mount[]: vpath = $(rootpath);	srcpath = $(ifsupgradepath);	writable = true;	condition = is_upgrader()
+mount[]: vpath = C:\;			srcpath = $(ifsdeltapath);		writable = true
+mount[]: vpath = $(rootpath);	srcpath = $(ifsinstallpath)
+
+
+//
+// Mode selector
+//
+config[mode]:
+	condition = is_game()
+	title = Mode
+	option[game]:
+		name = Game
+		launch = "$(rootpath)\$(EXEC).exe" $(PARAMETER)
+		priority = 1
+		end
+	option[maps]:
+		condition = is_windows()
+		name = Map Viewer
+		launch = "$(rootpath)\Maps.exe"
+		end
+	option[maps1]:
+		condition = is_dos()
+		name = Map Viewer - Episode 1
+		launch = "$(rootpath)\Map.exe" -e 1
+		end
+	option[maps2]:
+		condition = is_dos()
+		name = Map Viewer - Episode 2
+		launch = "$(rootpath)\Map.exe" -e 2
+		end
+	option[maps3]:
+		condition = is_dos()
+		name = Map Viewer - Episode 3
+		launch = "$(rootpath)\Map.exe" -e 3
+		end
+end
+
+
+//
+// DOS Audio configuration
+//
+config[sound]:
+	condition = is_dos()
+	title = Audio Configuration
+	option[none]:
+		name = No sound or joystick
+		audiohw = speaker
+		PARAMETER = -s
+		end
+	option[pcs]:
+		name = $(SPEAKER_NAME)
+		audiohw = speaker
+		PARAMETER = -p
+		end
+	option[adlib]:
+		name = AdLib + PC Speaker
+		audiohw = adlib
+		PARAMETER = $(NULL)
+		end
+	option[sb16]:
+		name = $(SB16_NAME)
+		audiohw = sb16
+		PARAMETER = $(NULL)
+		priority = 1
+		end
+end
+
+// DOS v1.0 shareware (Gray Design Associates)
+demo[pc-v1.0-sw]:
+	name = DOS v1.0 Shareware
+    anchorfile = N3D.EXE
+	EXEC = N3D
+    file[]: crc = 2c3b3921; size =      2206; name = DEMO.DAT
+    file[]: crc = 572c8c83; size =      1924; name = GAME.PAL
+    file[]: crc = a53d4e6b; size =   1975616; name = IMG.1
+    file[]: crc = c5cb6071; size =     90626; name = MAP.1
+    file[]: crc = b5f64282; size =     73648; name = N3D.EXE		// 1994-06-07
+    file[]: crc = cc393a9f; size =     14741; name = NITE3D.BSF
+    file[]: crc = 8a1291a5; size =    548930; name = SND.DAT
+    file[]: crc = 057bd388; size =    526520; name = UIF.DAT
+    file[]:	name = FILE_ID.DIZ	; optional = true
+    file[]:	name = LICENSE.TXT	; optional = true
+    file[]:	name = ORDER.TXT	; optional = true
+    file[]:	name = TECHNOTE.TXT	; optional = true
+    file[]:	name = VENDOR.DOC	; optional = true
+end
+
+// DOS v1.0 shareware (Public Software Library)
+demo[pc-v1.0-sw-psl]:
+	name = DOS v1.0 Shareware (PSL Distribution)
+	imports = pc-v1.0-sw
+    file[]: crc = ee723954; size =     14741; name = NITE3D.BSF		// 1994-06-14
+end
+
+// DOS v1.0 shareware (Association of Shareware Professionals)
+demo[pc-v1.0-sw-aosp]:
+	name = DOS v1.0 Shareware (AoSP Distribution)
+	imports = pc-v1.0-sw
+    file[]: crc = 449f18d0; size =     14741; name = NITE3D.BSF		// 1994-06-18
+end
+
+// DOS v1.0 shareware (Author Direct Network)
+demo[pc-v1.0-sw-adn]:
+	name = DOS v1.0 Shareware (ADN Distribution)
+	imports = pc-v1.0-sw
+    file[]: crc = 68415e05; size =     14741; name = NITE3D.BSF		// 1994-07-12
+end
+
+// DOS v1.1 shareware (MicroStar Inc.)
+demo[pc-v1.1-sw-msi]:
+	name = DOS v1.1 Shareware (MSI Distribution)
+	imports = pc-v1.1-sw
+    file[]: crc = e6900f11; size =   1975616; name = IMG.1			// one byte changed
+    file[]: crc = b623d375; size =     15245; name = NITE3D.BSF		// 1994-09-08
+end
+
+// DOS v1.1 shareware (Public Software Library)
+demo[pc-v1.1-sw-psl]:
+	name = DOS v1.1 Shareware (PSL Distribution)
+	imports = pc-v1.1-sw
+    file[]: crc = f5f1e76d; size =     15245; name = NITE3D.BSF		// 1994-09-08
+end
+
+// DOS v1.1 shareware (Gray Design Associates)
+demo[pc-v1.1-sw]:
+	name = DOS v1.1 Shareware
+	imports = pc-v1.0-sw
+    file[]: crc = 9d988a2d; size =     74018; name = N3D.EXE
+    file[]: crc = a105fab8; size =     15245; name = NITE3D.BSF		// 1994-09-14
+end
+
+// DOS v1.3 (ASL Software Publishing)
+game[pc-v1.3-asl]:
+	name = DOS v1.3 (ASL Distribution)
+	anchorfile = N3D.EXE
+	EXEC = N3D
+	file[]: crc = 2d3871e0; size =     19088; name = COURB.FON
+	file[]: crc = 2c3b3921; size =      2206; name = DEMO.1
+	file[]: crc = 726e819e; size =      4198; name = DEMO.2
+	file[]: crc = 170afb81; size =      3382; name = DEMO.3
+	file[]: crc = 3c236356; size =    337589; name = ENDING.FLI
+	file[]: crc = 572c8c83; size =      1924; name = GAME.PAL
+	file[]: crc = d324e617; size =     25253; name = HINTS.1
+	file[]: crc = ec45b15a; size =     26432; name = HINTS.2
+	file[]: crc = 4f8b3cdb; size =     24259; name = HINTS.3
+	file[]: crc = a53d4e6b; size =   1975616; name = IMG.1
+	file[]: crc = aaab9373; size =   1567763; name = IMG.2
+	file[]: crc = a7d8141a; size =   1796300; name = IMG.3
+	file[]: crc = c5cb6071; size =     90626; name = MAP.1
+	file[]: crc = 0eded2fc; size =     82434; name = MAP.2
+	file[]: crc = 66139e22; size =     82434; name = MAP.3
+	file[]: crc = 1b8ce0c7; size =     49906; name = MAP.EXE
+	file[]: crc = c439bc40; size =        99; name = MAPS.BAT
+	file[]: crc = 3709fc99; size =     74088; name = N3D.EXE
+	file[]: crc = a207d555; size =     10250; name = NITE3D.BSF		// 1994-10-11
+	file[]: crc = 13f9f073; size =      8725; name = OBJECTS.1
+	file[]: crc = 902463fd; size =      8427; name = OBJECTS.2
+	file[]: crc = 0b41a055; size =      7228; name = OBJECTS.3
+	file[]: crc = 8a1291a5; size =    548930; name = SND.DAT
+	file[]:	name = TECHNOTE.TXT	; optional = true
+	file[]: crc = 3518f506; size =     45936; name = TMSRB.FON
+	file[]: crc = 057bd388; size =    526520; name = UIF.DAT
+	file[]: crc = 0e528ce0; size =     12296; name = WALLS.1
+	file[]: crc = 3704c6c5; size =     11918; name = WALLS.2
+	file[]: crc = a0c8bd3b; size =     11543; name = WALLS.3
+end
+
+// DOS v1.5 shareware (Public Software Library)
+demo[pc-v1.5-sw-psl]:
+	name = DOS v1.5 Shareware (PSL Distribution)
+	imports = pc-v1.0-sw
+    file[]: crc = 2c3b3921; size =      2206; name = DEMO.1
+    file[]: crc = eb67341d; size =     74157; name = N3D.EXE
+    file[]: crc = c1e81a13; size =     15495; name = NITE3D.BSF		// 1994-12-09
+end
+
+// DOS v1.5 shareware (Limelight Media Inc.)
+demo[pc-v1.5-sw-psl]:
+	name = DOS v1.5 Shareware (Limelight Distribution)
+	imports = pc-v1.0-sw
+    file[]: crc = 2c3b3921; size =      2206; name = DEMO.1
+    file[]: crc = 3199c03f; size =       429; name = FILE_ID.DIZ
+    file[]: crc = 0df57f64; size =      4244; name = LICENSE.TXT
+    file[]: crc = eb67341d; size =     74157; name = N3D.EXE
+    file[]: crc = 920c27d3; size =     15495; name = NITE3D.BSF
+    file[]: crc = cf76e140; size =      1391; name = ORDER.TXT
+    file[]: crc = d0cdb04a; size =      6583; name = TECHNOTE.TXT
+end
+
+// DOS v1.7 shareware
+demo[pc-v1.7-sw]:
+	name = DOS v1.7 Shareware
+	imports = pc-v1.0-sw
+    file[]: crc = 2c3b3921; size =      2206; name = DEMO.1
+    file[]: crc = c6a8a03d; size =     74280; name = N3D.EXE
+    file[]: crc = 385fb0cb; size =     15513; name = NITE3D.BSF		// 1995-02-19
+end
+
+// DOS v1.7 shareware (AOL)
+demo[pc-v1.7-sw-aol]:
+	name = DOS v1.7 Shareware (AOL Distribution)
+	imports = pc-v1.7-sw
+    file[]: crc = 7cafe4a3; size =     15513; name = NITE3D.BSF		// 1995-02-19
+end
+
+// DOS CD v1.8 - Dr. CD-ROM release
+game[pc-v1.8-drc]:
+	name = DOS v1.8 (Dr. CD-ROM Distribution)
+	imports = pc-v1.3-asl
+    file[]: crc = 96846de1; size =     20678; name = DSTOPEN.IMG	// Opening logo
+    file[]: crc = 28191b0e; size =     74441; name = N3D.EXE
+    file[]: crc = 2f5b5196; size =     10250; name = NITE3D.BSF		// 1995-05-24
+end
+
+// DOS v1.8 shareware (University of Wisconsin Parkside)
+demo[pc-v1.8-sw-uwp]:
+	name = DOS v1.8 Shareware (UWP Distribution)
+	imports = pc-v1.0-sw
+    file[]: crc = 2c3b3921; size =      2206; name = DEMO.1
+    file[]: crc = f4ba13c9; size =     74426; name = N3D.EXE
+    file[]: crc = a2596d69; size =     15513; name = NITE3D.BSF		// 1995-07-22
+end
+
+// DOS v1.8 shareware (Walnut Creek)
+demo[pc-v1.8-sw-wc]:
+	name = DOS v1.8 Shareware (WC Distribution)
+	imports = pc-v1.8-sw-uwp
+    file[]: crc = 4e50f718; size =     15513; name = NITE3D.BSF		// 1995-07-22
+end
+
+// DOS v1.9 shareware (Author Direct Network)
+demo[pc-v1.9-sw-adn]:
+	name = DOS v1.9 Shareware (ADN Distribution)
+	imports = pc-v1.8-sw-uwp
+    file[]: crc = 08084be8; size =     15800; name = NITE3D.BSF		// 1995-09-12
+end
+
+// DOS v2.0 shareware (Author Direct Network)
+demo[pc-v2.0-sw-adn]:
+	name = DOS v2.0 Shareware (ADN Distribution)
+	imports = pc-v1.0-sw
+    file[]: crc = 2c3b3921; size =      2206; name = DEMO.1
+    file[]: crc = 77a012d1; size =   2244774; name = IMG.1			// 1995-09-15
+    file[]: crc = 958941e9; size =     90626; name = MAP.1
+    file[]: crc = 8805aaed; size =     74484; name = N3D.EXE
+    file[]: crc = 8a987f09; size =     15792; name = NITE3D.BSF		// 1995-10-05
+    file[]: crc = 5f4b15fd; size =    528372; name = UIF.DAT
+end
+
+// DOS v2.0 (Outreach Communications Corp)
+game[pc-v2.0-occ]:
+	name = DOS v2.0 (Outreach Distribution)
+	imports = pc-v1.3-asl
+    file[]: crc = 77a012d1; size =   2244774; name = IMG.1
+    file[]: crc = cf4872a9; size =   1836921; name = IMG.2
+    file[]: crc = 1ea29353; size =   1792193; name = IMG.3
+    file[]: crc = 958941e9; size =     90626; name = MAP.1
+    file[]: crc = cc0fd1c6; size =     82434; name = MAP.3
+    file[]: crc = 8805aaed; size =     74484; name = N3D.EXE
+    file[]: crc = 8e6c2ee6; size =     10250; name = NITE3D.BSF		// 1996-06-16
+    file[]: crc = 15fdddbf; size =      8725; name = OBJECTS.1
+    file[]: crc = 28a6add6; size =      8427; name = OBJECTS.2
+    file[]: crc = 5f4b15fd; size =    528372; name = UIF.DAT
+end
+
+
+//
+// Windows v1.6 Shareware
+//
+demo[pc-win-v1.6s]:
+    name = Windows v1.6 Shareware
+    anchorfile = NITE3W.EXE
+	EXEC = NITE3W
+	osenv = windows 3.11
+	winres = 640x480x8
+	audiohw = gmidi
+	file[]: crc = 2381076e; size =      1630; name = DEMO.1
+	file[]: crc = 2007aacd; size =      5744; name = DISPDIB.DLL
+	file[]: crc = 27d9df74; size =       416; name = FILE_ID.DIZ
+	file[]: crc = b4c36fdf; size =      5459; name = GAME.PAL
+	file[]: crc = 1f885c56; size =   2250921; name = IMG.1			// 1994-11-01
+	file[]: crc = b007481c; size =      6266; name = LICENSE.TXT
+	file[]: crc = c5cb6071; size =     90626; name = MAP.1
+	file[]: crc = 99e8d862; size =     15154; name = NITE3D.BSF		// 1995-07-22
+	file[]: crc = 6bea3bdd; size =    230128; name = NITE3W.EXE
+	file[]: crc = d0e40bcf; size =      1408; name = ORDER.TXT
+	file[]: crc = 7210caa5; size =     13056; name = README.WRI
+	file[]: crc = d955a882; size =    843918; name = SND.DAT
+	file[]: crc = 2e302598; size =    527595; name = UIF.DAT
+	file[]: crc = 9f666c43; size =      3158; name = VENDOR.DOC
+end
+
+
+//
+// Windows v1.6
+//
+game[pc-win-v1.6]:
+    name = Windows v1.6
+    anchorfile = NITE3W.EXE
+	EXEC = NITE3W
+	osenv = windows 3.11
+	winres = 640x480x8
+	audiohw = gmidi
+    file[]: crc = 2381076e; size =      1630; name = DEMO.1
+    file[]: crc = 2007aacd; size =      5744; name = DISPDIB.DLL
+    file[]: crc = 1c618bdf; size =    334855; name = ENDING.FLI
+    file[]: crc = b4c36fdf; size =      5459; name = GAME.PAL
+    file[]: crc = 1f885c56; size =   2250921; name = IMG.1
+    file[]: crc = 815c29f9; size =   1843068; name = IMG.2
+    file[]: crc = f2a07258; size =   1798340; name = IMG.3
+    file[]: crc = c5cb6071; size =     90626; name = MAP.1
+    file[]: crc = 0eded2fc; size =     82434; name = MAP.2
+    file[]: crc = 66139e22; size =     82434; name = MAP.3
+    file[]: crc = dc0fedee; size =    120048; name = MAPS.EXE
+    file[]: crc = 58ffe74a; size =     12812; name = MAPS.HLP
+    file[]: crc = 0f8c9fdb; size =     10378; name = NITE3D.BSF		// 1995-08-11
+    file[]: crc = 6bea3bdd; size =    230128; name = NITE3W.EXE
+    file[]: crc = b3e2bbb1; size =      8725; name = OBJECTS.1
+    file[]: crc = 902463fd; size =      8427; name = OBJECTS.2
+    file[]: crc = 0b41a055; size =      7228; name = OBJECTS.3
+    file[]: crc = 7210caa5; size =     13056; name = README.WRI
+    file[]: crc = d955a882; size =    843918; name = SND.DAT
+    file[]: crc = 2e302598; size =    527595; name = UIF.DAT
+    file[]: crc = 0e528ce0; size =     12296; name = WALLS.1
+    file[]: crc = 3704c6c5; size =     11918; name = WALLS.2
+    file[]: crc = a0c8bd3b; size =     11543; name = WALLS.3
+//    file[]: crc = 420c7155; size =     92208; name = wing.dll
+//    file[]: crc = c259f8ca; size =     12800; name = Wing32.dll
+//    file[]: crc = 3b514083; size =    188960; name = wingde.dll
+//    file[]: crc = 1be07fa4; size =      6736; name = WINGDIB.DRV
+//    file[]: crc = a2b26dc7; size =      5024; name = wingpal.wnd
+end
+
+
+//
+// Windows v1.8 Shareware
+// 'This version fixes Win95 install, two map bugs and restores volume settings on exit'
+//
+demo[pc-win-v1.8s]:
+	name = Windows v1.8 Shareware (1995)
+	imports = pc-win-v1.6s
+	file[]: crc = 13dfe097; size =       422; name = FILE_ID.DIZ
+	file[]: crc = ec1613c1; size =      6382; name = LICENSE.TXT
+	file[]: crc = 958941e9; size =     90626; name = MAP.1			// 1995-09-14
+	file[]: crc = 68dea052; size =     15437; name = NITE3D.BSF		// 1995-10-12
+	file[]: crc = 9341469c; size =    230224; name = NITE3W.EXE
+	file[]: crc = 5b39fc26; size =      1408; name = ORDER.TXT
+	file[]: crc = 8476e18a; size =     13184; name = README.WRI
+end
+
+
+//
+// Windows v1.8 Shareware (1996 repack)
+//
+demo[pc-win-v1.8s2]:
+    name = Windows v1.8 Shareware (1996)
+	imports = pc-win-v1.8s
+    file[]: crc = b007481c; size =      6266; name = LICENSE.TXT
+    file[]: crc = d4ae699d; size =     15437; name = NITE3D.BSF		// 1996-06-13
+    file[]: crc = bdc3b0ba; size =      1408; name = ORDER.TXT
+end
+
+end
