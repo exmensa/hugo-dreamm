@@ -22,17 +22,34 @@ mount[]: vpath = $(rootpath);	srcpath = $(ifsinstallpath)
 //
 // Mode selector
 //
+PARAMETER = $(NULL)
 config[mode]:
-	condition = is_game()
 	title = Mode
-	option[game]:
-		name = Game
-		launch = "$(rootpath)\$(EXEC).exe" $(PARAMETER)
+	option[play]:
+		name = Sound Enabled
 		priority = 1
 		end
-	option[maps]:
-		name = Map Viewer
-		launch = "$(rootpath)\$(EXEC).exe" $(PARAMETER)
+	option[silent]:
+		name = Sound Disabled
+		PARAMETER = -s
+		end
+	option[watch]:
+	condition = file_exists("$$(rootpath)\\PLAYBACK.DAT")
+		name = Automatic Playback
+		PARAMETER = -p
+		end
+	option[watchsilent]:
+	condition = file_exists("$$(rootpath)\\PLAYBACK.DAT")
+		name = Automatic Playback, Sound Disabled
+		PARAMETER = -p -s
+		end
+	option[demo]:
+		name = Demo - Sound Enabled
+		PARAMETER = -d
+		end
+	option[demosilent]:
+		name = Demo - Sound Disabled
+		PARAMETER = -d -s
 		end
 end
 
