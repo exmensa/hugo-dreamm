@@ -474,10 +474,10 @@ game[pc-2.1r]:
 	imports = dos-base
     file[]: crc = e848530e; size =      1442; name = HELP.DAT
     file[]: crc = 902b5c05; size =    114547; name = HHH.EXE	// 1994-06-05
-    file[]: crc = a5f4b430; size =      6024; name = HINTS
-    file[]: crc = 6ba14207; size =      1134; name = HUGO.BSF
+    file[]: crc = a5f4b430; size =      6024; name = HINTS			; optional = true
+    file[]: crc = 6ba14207; size =      1134; name = HUGO.BSF	// 1995-12-02
     file[]: crc = e49a5e7f; size =      9442; name = MANUAL.DOC
-    file[]: crc = dd6949ad; size =      8100; name = PLAYBACK.DAT	;	 optional = true
+    file[]: crc = dd6949ad; size =      8100; name = PLAYBACK.DAT	; optional = true	// 1990-01-14
 end
 
 
