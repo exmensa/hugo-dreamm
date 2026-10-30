@@ -194,8 +194,8 @@ end
 
 // DOS 1.2S installer - The Farm BBS
 // needs y + enter installer
-installer[pc-1.1s-inst3]:
-	name = DOS v1.1 Shareware Installer (The Farm BBS)
+installer[pc-1.2s-inst3]:
+	name = DOS v1.2 Shareware Installer (The Farm BBS)
 	anchorfile = hhouse2.exe
 	launch = $(rootpath)\hhouse2.exe
 	installid = pc-1.2s
