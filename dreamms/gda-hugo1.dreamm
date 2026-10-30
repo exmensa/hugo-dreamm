@@ -195,8 +195,18 @@ demo[pc-1.2s]:
 end
 
 
-// DOS 1.2S installer
+// DOS 1.2S installer 1990-01-14
 installer[pc-1.2s-inst]:
+	name = DOS v1.2 Shareware Installer
+	anchorfile = HUGO.EXE
+	launch = $(rootpath)\HUGO.EXE
+	installid = pc-1.2s
+    file[]: crc = bf3e0a90; size =    227077; name = HUGO.EXE	;	exactonly = true
+end
+
+
+// DOS 1.2S installer 1990-01-20 - just padding at end of file
+installer[pc-1.2s-inst2]:
 	name = DOS v1.2 Shareware Installer
 	anchorfile = HUGO.EXE
 	launch = $(rootpath)\HUGO.EXE
