@@ -14,6 +14,7 @@ Detects:
     [    1244] [1MAINp9:1] ====> CreateFile() failed to open file C:\Program Files\hugowin\hwin_1\CONFIG.DAT: OPEN_EXISTING but file doesn't exist
     Manually adding CONFIG.DAT fixes CreateFile() but game still freezes, there are references to unimplemented APIs
 ```
+---
 Hugo II: Whodunit? / Hugo's Mystery Adventure (1991)  
 ```
 Detects:  
@@ -21,8 +22,10 @@ Detects:
     DOS registered v2.0 / 2.1  
   Options set for automatic playback & disabling sound in registered DOS versions  
 ```
+---
 Hugo III: Jungle of Doom / Hugo's Amazon Adventure (1992)  
 
+---
 Nitemare-3D (1994)  
 ```
 Detects:  
