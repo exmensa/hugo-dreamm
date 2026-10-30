@@ -24,3 +24,4 @@ jobs:
         with:
           name: hugo-gda.dreamm
           path: hugo-gda.dreamm
+          archive: false
