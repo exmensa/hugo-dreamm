@@ -22,5 +22,5 @@ jobs:
       - name: Upload Zip Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DREAMMpack
+          name: hugo-gda.dreamm
           path: hugo-gda.dreamm
