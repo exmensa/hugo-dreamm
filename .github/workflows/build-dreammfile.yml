@@ -15,13 +15,13 @@ jobs:
         uses: thedoctor0/zip-release@0.7.5
         with:
           type: 'zip'
-          filename: 'hugo-gda.dreamm'
+          filename: 'hugo-gda.dreammpack'
           exclusions: 'README.md *.git* /*.github/*'
 
       # Step 3: Upload the ZIP file as a downloadable GitHub artifact
       - name: Upload Raw File
         uses: actions/upload-artifact@v7
         with:
-          name: hugo-gda.dreamm
-          path: hugo-gda.dreamm
+          name: hugo-gda.dreammpack
+          path: hugo-gda.dreammpack
           archive: false
