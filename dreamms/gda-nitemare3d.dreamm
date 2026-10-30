@@ -192,7 +192,7 @@ demo[pc-v1.5-sw-psl]:
 end
 
 // DOS v1.5 shareware (Limelight Media Inc.)
-demo[pc-v1.5-sw-psl]:
+demo[pc-v1.5-sw-llm]:
 	name = DOS v1.5 Shareware (Limelight Distribution)
 	imports = pc-v1.0-sw
     file[]: crc = 2c3b3921; size =      2206; name = DEMO.1
