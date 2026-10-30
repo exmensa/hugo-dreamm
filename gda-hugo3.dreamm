@@ -1,0 +1,162 @@
+//
+// Hugo III: Jungle of Doom (Gray Design Associates 1992)
+//
+desc[gda-hugo3]:
+name = Hugo III: Jungle of Doom
+icon = gda-hugo3.png
+machine = pc
+osenv = dos
+mips = 1.2
+videohw = ega
+audiohw = sb16
+rootpath = C:\Hugo3
+launch = $(rootpath)\HUGO.EXE
+
+//
+// filesystem
+//
+mount[]: vpath = C:\;			srcpath = $(ifsdeltapath);		writable = true
+mount[]: vpath = $(rootpath);	srcpath = $(ifsinstallpath)
+
+
+//
+// Mode selector
+//
+config[mode]:
+	condition = is_game()
+	title = Mode
+	option[game]:
+		name = Game
+		launch = "$(rootpath)\$(EXEC).exe" $(PARAMETER)
+		priority = 1
+		end
+	option[maps]:
+		name = Map Viewer
+		launch = "$(rootpath)\$(EXEC).exe" $(PARAMETER)
+		end
+end
+
+// Installer batch file
+BATCH = [[[$(CRLF)
+	H3_PART1.EXE
+	H3_PART2.EXE
+]]]
+
+script[runbat]:
+    code = [[[$(CRLF)
+        file_save("$$(rootpath)\\Install.bat", "$$(BATCH)");
+    ]]]
+end
+
+
+// DOS common files
+fragment[dos-base]:
+    file[]: crc = 39249882; size =      2270; name = HELP.DAT
+    file[]: crc = f0476085; size =    136419; name = OBJECTS.DAT
+    file[]: crc = 5b83b044; size =    484746; name = SCENERY1.DAT
+    file[]: crc = 81a59aaa; size =    137029; name = SCENERY2.DAT
+    file[]: crc = d03b8170; size =     22777; name = STRINGS.DAT
+    file[]: crc = 3518f506; size =     45936; name = TMSRB.FON
+end
+
+
+//DOS 1.0 Shareware
+demo[pc-1.0s]:
+	name = DOS v1.0 Shareware
+	anchorfile = HUGO.EXE
+	imports = dos-base
+    file[]: crc = 88639ca5; size =    109635; name = HUGO.EXE		// 1992-02-16
+    file[]: crc = 25d50be0; size =     14904; name = MANUAL.DOC
+    file[]: crc = 014dc8bf; size =     12489; name = README.DOC
+    file[]: crc = c10809e1; size =     22740; name = STRINGS.DAT
+end
+
+
+// DOS 1.0S installer 1992-02-16
+installer[pc-1.0s-inst]:
+	name = DOS v1.0 Shareware Installer
+	anchorfile = H3_PART2.EXE
+	launch = $(rootpath)\Install.bat
+	installid = pc-1.0s
+    file[]: crc = 10975a5f; size =    220120; name = H3_PART1.EXE
+    file[]: crc = 02216852; size =    304158; name = H3_PART2.EXE	; exactonly = true
+end
+
+
+//DOS 1.1 Shareware
+demo[pc-1.1s]:
+	name = DOS v1.1 Shareware
+	anchorfile = HUGO.EXE
+	imports = dos-base
+    file[]: crc = 1395e0d0; size =    109645; name = HUGO.EXE		// 1992-04-05
+    file[]: crc = df4e3d23; size =     14974; name = MANUAL.DOC
+    file[]: crc = bd0777ec; size =     12570; name = README.DOC
+end
+
+
+//DOS 2.0 Chestnut (CDRP) CD distribution, no playback function
+game[pc-2.0r]:
+	name = DOS v2.0 (CDRP)
+	anchorfile = HUGO.EXE
+	imports = dos-base
+    file[]: crc = ca4f01bf; size =      2092; name = HELP.DAT
+    file[]: crc = 76e7d022; size =      6605; name = HINTS
+    file[]: crc = 93e5198e; size =       381; name = HUGO.BSF		// 1993-10-03
+    file[]: crc = 732d3339; size =    110457; name = HUGO.EXE		// 1993-06-03
+    file[]: crc = 88a0f5d8; size =      8023; name = MANUAL.DOC
+end
+
+
+//DOS 2.0 Shareware
+demo[pc-2.0s]:
+	name = DOS v2.0 Shareware
+	anchorfile = HUGO.EXE
+	imports = dos-base
+    file[]: crc = cf7fbc5d; size =       415; name = FILE_ID.DIZ
+    file[]: crc = 0335eca2; size =      2270; name = HELP.DAT
+    file[]: crc = b52083d4; size =       912; name = HUGO.BSF		// 1992-09-28
+    file[]: crc = 732d3339; size =    110457; name = HUGO.EXE		// 1992-09-28
+    file[]: crc = 6bc87c43; size =     26657; name = MANUAL.DOC
+    file[]: crc = 0e36a77d; size =      2124; name = VENDOR.DOC
+end
+
+
+//DOS 2.1 Shareware (World Wide Web distribution)
+demo[pc-2.1s]:
+	name = DOS v2.1 Shareware (WWW)
+	anchorfile = HUGO.EXE
+	imports = dos-base
+    file[]: crc = ce258514; size =       407; name = FILE_ID.DIZ
+    file[]: crc = 6a10d862; size =      2407; name = HELP.DAT
+    file[]: crc = cf5d24ac; size =       717; name = HUGO.BSF		// 1995-07-07
+    file[]: crc = c2e4f80e; size =    110587; name = HUGO.EXE		// 1994-06-05
+    file[]: crc = addd46e5; size =     24000; name = MANUAL.DOC
+end
+
+
+//DOS 2.1
+game[pc-2.1r]:
+	name = DOS v2.1
+	anchorfile = HUGO.EXE
+	imports = dos-base
+    file[]: crc = 0ae09cbd; size =      1888; name = HELP.DAT
+    file[]: name = HINTS
+    file[]: crc = 5110f12f; size =      1134; name = HUGO.BSF		// 1995-12-02
+    file[]: crc = c2e4f80e; size =    110587; name = HUGO.EXE		// 1994-06-05
+    file[]: crc = 43bb8532; size =     10393; name = MANUAL.DOC
+    file[]: crc = 47eb8e5c; size =      6408; name = PLAYBACK.DAT
+end
+
+
+// Windows 1.4 shareware (Hugo's Horrific Adventure)
+// demo[pc-win-1.4s]:
+// 	name = Windows v1.4 Shareware
+// 	anchorfile = HUGOWIN1.EXE
+// 	rootpath = C:\Program Files\hugowin\hwin_1
+// 	launch = "$(rootpath)\HUGOWIN1.EXE"
+// 	osenv = windows 3.11
+// 	winres = 640x480x8
+// 	audiohw = gmidi
+// end
+
+end
